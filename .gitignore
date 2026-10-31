@@ -1,0 +1,7 @@
+# Datos personales: nunca al repositorio
+datos-iniciales.json
+*.xlsx
+.DS_Store
+.claude/
+# Menciona conceptos y categorías personales
+scripts/migrar.rb
