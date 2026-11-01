@@ -12,10 +12,22 @@
   --acento: #1f66bd;
   --sobre-acento: #ffffff;
   --serie-ingreso: #2a78d6;
-  --serie-gasto: #eb6834;
+  --serie-gasto: #e5736f;
   --resto: #dcdbd5;
-  --critico: #c9302f;
+  --critico: #b3261e;
   --critico-texto: #b3261e;
+  /* Significado fijo: azul = lo que tenés, rojo = lo que sale, ámbar = evitable */
+  --ingreso-fondo: #e4effb;
+  --ingreso-texto: #1a5fb4;
+  --gasto-fondo: #fdeceb;
+  --gasto-texto: #b9403c;
+  --evitable-fondo: #fdf1d9;
+  --evitable-texto: #8a5a00;
+  --ahorro-fondo: #1f66bd;
+  --negativo-fondo: #c9302f;
+  --sobre-color: #ffffff;
+  --etiqueta-fondo: #fbdedc;
+  --etiqueta-texto: #b3261e;
   --sombra: 0 6px 20px rgb(0 0 0 / 0.18);
 
   --seg-arriba: env(safe-area-inset-top, 0px);
@@ -38,10 +50,20 @@
     --acento: #3987e5;
     --sobre-acento: #0b0b0b;
     --serie-ingreso: #3987e5;
-    --serie-gasto: #d95926;
+    --serie-gasto: #d9625e;
     --resto: #3a3a37;
-    --critico: #e66767;
+    --critico: #ff3b30;
     --critico-texto: #f08a8a;
+    --ingreso-fondo: #16273c;
+    --ingreso-texto: #9cc8f7;
+    --gasto-fondo: #35201f;
+    --gasto-texto: #f4a7a3;
+    --evitable-fondo: #33280f;
+    --evitable-texto: #eec566;
+    --ahorro-fondo: #2a78d6;
+    --negativo-fondo: #b3362f;
+    --etiqueta-fondo: #4a2422;
+    --etiqueta-texto: #f9b8b4;
     --sombra: 0 6px 20px rgb(0 0 0 / 0.5);
   }
 }
@@ -86,7 +108,16 @@ main {
 .tarjeta span { display: block; color: var(--texto-2); font-size: 13px; }
 .tarjeta strong { display: block; font-size: clamp(16px, 5vw, 21px); line-height: 1.25; letter-spacing: -0.01em; white-space: nowrap; }
 .tarjeta small { display: block; color: var(--texto-2); font-size: 12px; }
-.tarjeta.negativo strong { color: var(--critico-texto); }
+.tarjeta.ingreso { background: var(--ingreso-fondo); border-color: transparent; }
+.tarjeta.ingreso strong { color: var(--ingreso-texto); }
+.tarjeta.gasto { background: var(--gasto-fondo); border-color: transparent; }
+.tarjeta.gasto strong { color: var(--gasto-texto); }
+.tarjeta.evitable { background: var(--evitable-fondo); border-color: transparent; }
+.tarjeta.evitable strong { color: var(--evitable-texto); }
+/* Disponible y ahorro son el dato principal: fondo lleno. En rojo si es negativo. */
+.tarjeta.ahorro { background: var(--ahorro-fondo); border-color: transparent; }
+.tarjeta.ahorro.negativo { background: var(--negativo-fondo); }
+.tarjeta.ahorro span, .tarjeta.ahorro strong, .tarjeta.ahorro small { color: var(--sobre-color); }
 
 .panel { background: var(--superficie); border: 1px solid var(--linea-suave); border-radius: 14px; padding: 14px; margin-bottom: 12px; min-width: 0; }
 .panel h2 { font-size: 16px; margin-bottom: 8px; }
@@ -125,20 +156,25 @@ main {
 .mov small { display: block; color: var(--texto-2); font-size: 12px; }
 .mov-monto { text-align: right; flex: none; }
 .mov-monto strong { display: block; font-weight: 600; }
-.etiqueta { color: var(--texto); background: var(--superficie-2); border-radius: 4px; padding: 0 5px; }
+.mov.es-ingreso .mov-monto strong { color: var(--ingreso-texto); }
+.etiqueta { color: var(--etiqueta-texto); background: var(--etiqueta-fondo); border-radius: 4px; padding: 0 5px; font-weight: 600; }
 
 /* ---------- Tablas ---------- */
 .tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
 .tabla th, .tabla td { padding: 7px 6px; text-align: left; border-bottom: 1px solid var(--linea-suave); font-weight: 400; white-space: nowrap; }
-.tabla th:first-child { padding-left: 0; }
+.tabla th:first-child, .tabla td:first-child { padding-left: 0; }
 .tabla .n:last-child { padding-right: 0; }
 .tabla thead th { color: var(--texto-2); font-size: 12px; }
 .tabla tfoot th, .tabla tfoot td { font-weight: 600; border-bottom: 0; }
 .tabla .n { text-align: right; }
+.tabla .total-gasto, .tabla .fila-gasto td, .tabla .fila-gasto th { color: var(--gasto-texto); }
+.tabla .total-evitable, .tabla .fila-evitable td, .tabla .fila-evitable th { color: var(--evitable-texto); }
 .tabla .fuerte { font-weight: 600; }
 .tabla-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -14px; padding: 0 14px; }
 .matriz { font-size: 13px; }
 .matriz th:first-child { position: sticky; left: -14px; background: var(--superficie); padding-left: 14px; }
+.matriz .fila-gasto td, .matriz .fila-gasto th:first-child { background: var(--gasto-fondo); }
+.matriz .fila-evitable td, .matriz .fila-evitable th:first-child { background: var(--evitable-fondo); }
 
 /* ---------- Controles ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 14px; border-radius: 10px; background: var(--superficie-2); font-weight: 500; text-align: center; }
