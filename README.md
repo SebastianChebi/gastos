@@ -1,7 +1,7 @@
 # Gastos
 
-App personal de gastos e ingresos para iPhone (PWA). Sitio estático, sin backend ni login:
-los datos quedan solo en el dispositivo.
+App personal de gastos e ingresos para iPhone (PWA). Sitio estático, sin backend. Los datos
+viven en cada dispositivo y se sincronizan con un repositorio privado de GitHub.
 
 ## Estructura
 
@@ -10,6 +10,7 @@ los datos quedan solo en el dispositivo.
 - `js/app.js`: arranque y navegación.
 - `js/db.js`: datos (IndexedDB). Toda escritura pasa por acá.
 - `js/calculos.js`: totales y resúmenes, sin tocar la pantalla.
+- `js/sync.js`: sincronización entre dispositivos.
 - `js/tc.js`: tipos de cambio.
 - `js/importar.js`: importar y exportar.
 - `js/form-gasto.js`, `js/form-ingreso.js`, `js/campo-monto.js`: formularios.
