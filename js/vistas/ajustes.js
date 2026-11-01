@@ -3,7 +3,8 @@
 import { estado, cargarDatos, guardarAjustes, guardarCategorias, renombrarCategoria } from '../db.js';
 import { validarImportacion, exportarRespaldo, exportarGastosCSV, exportarIngresosCSV } from '../importar.js';
 import { actualizarTC, tcPara, MONEDAS_TC } from '../tc.js';
-import { dialogo, toast } from '../ui.js';
+import { conectarSync, desconectarSync, estadoSync, sincronizar, URL_CREAR_CLAVE } from '../sync.js';
+import { confirmar, dialogo, toast } from '../ui.js';
 import { esc, fechaLarga, leerNumero, numeroEditable, tipoCambio, MONEDAS } from '../formato.js';
 import { htmlAvisoRespaldo } from './inicio.js';
 
@@ -29,6 +30,24 @@ function htmlCategoria(c) {
       <button type="button" class="enlace" data-renombrar="${esc(c.nombre)}">Renombrar</button>
       <button type="button" class="enlace" data-ocultar="${esc(c.nombre)}">${c.oculta ? 'Mostrar' : 'Ocultar'}</button>
     </li>`;
+}
+
+function htmlSync() {
+  const s = estadoSync();
+  if (!s.conectado) {
+    return `
+      <p class="dato">Mantiene los mismos datos en todos tus dispositivos.</p>
+      <div class="pila">
+        <a class="btn" href="${URL_CREAR_CLAVE}" target="_blank" rel="noopener">1. Crear clave en GitHub</a>
+        <button type="button" class="btn primario" data-sync-conectar>2. Pegar clave y conectar</button>
+      </div>`;
+  }
+  return `
+    <p class="dato">${esc(s.mensaje)}</p>
+    <div class="pila">
+      <button type="button" class="btn" data-sync-ahora>Sincronizar ahora</button>
+      <button type="button" class="btn peligro" data-sync-quitar>Desconectar este dispositivo</button>
+    </div>`;
 }
 
 async function importar(archivo, volverADibujar) {
@@ -76,6 +95,7 @@ export function renderAjustes(raiz, volverADibujar) {
         <button type="button" class="btn grande" data-csv-ingresos>Exportar ingresos (Excel/CSV)</button>
       </div>
     </section>
+    <section class="panel"><h2>Sincronización</h2>${htmlSync()}</section>
     <section class="panel">
       <div class="panel-cabecera"><h2>Tipos de cambio</h2><button type="button" class="enlace fuerte" data-actualizar-tc>Actualizar</button></div>
       ${MONEDAS_TC.map(htmlTC).join('')}
@@ -136,6 +156,30 @@ export function renderAjustes(raiz, volverADibujar) {
       await guardarAjustes({ tcFijo: resto });
       volverADibujar();
     };
+  });
+
+  $('[data-sync-conectar]')?.addEventListener('click', async () => {
+    const clave = await dialogo({
+      titulo: 'Conectar',
+      mensaje: 'Pegá la clave de GitHub. Queda guardada solo en este dispositivo.',
+      campo: '',
+      botones: [{ texto: 'Conectar', valor: true, tipo: 'primario' }]
+    });
+    if (!clave) return;
+    const error = await conectarSync(clave);
+    toast(error || 'Conectado');
+    volverADibujar();
+  });
+  $('[data-sync-ahora]')?.addEventListener('click', async () => {
+    await sincronizar();
+    toast(estadoSync().mensaje);
+    volverADibujar();
+  });
+  $('[data-sync-quitar]')?.addEventListener('click', async () => {
+    const ok = await confirmar('¿Desconectar este dispositivo?', 'Tus datos no se borran, pero dejan de sincronizarse acá.', 'Desconectar');
+    if (!ok) return;
+    await desconectarSync();
+    volverADibujar();
   });
 
   const existe = (nombre) => estado.categorias.some((c) => c.nombre.toLowerCase() === nombre.toLowerCase());

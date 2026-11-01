@@ -52,7 +52,7 @@ export function renderInicio(raiz) {
   raiz.innerHTML = `
     <header class="titulo"><h1>${MESES[mes - 1]}</h1><p>${anio}</p></header>
     ${htmlAvisoRespaldo()}
-    ${sinDatos ? '<a class="banner" href="#ajustes">Todavía no hay datos. <strong>Importar respaldo</strong></a>' : ''}
+    ${sinDatos ? '<a class="banner" href="#ajustes">Todavía no hay datos. <strong>Sincronizar o importar</strong></a>' : ''}
     <section class="tarjetas">
       ${tarjeta('Ingreso del mes', usd(r.ingreso))}
       ${tarjeta('Gastado', usd(r.gasto))}
