@@ -78,7 +78,7 @@ export function abrirHoja({ titulo, contenido, alGuardar, alCerrar }) {
 }
 
 export function filaMovimiento(g) {
-  const detalle = [esc(g.categoria), fechaCorta(g.fecha)];
+  const detalle = [`<span class="categoria">${esc(g.categoria)}</span>`, fechaCorta(g.fecha)];
   return `
     <li><button type="button" class="mov" data-gasto="${esc(g.id)}">
       <span class="mov-texto">
