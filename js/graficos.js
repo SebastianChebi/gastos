@@ -1,5 +1,5 @@
 // Gráficos con Chart.js. Los colores salen de las variables de css/app.css, así
-// siguen al modo claro/oscuro. Convención fija: Ingreso = azul, Gasto = naranja.
+// siguen al modo claro/oscuro. Convención fija: Ingreso y disponible = azul, Gasto = rojo suave.
 
 import { MESES_CORTOS, usd, numero } from './formato.js';
 
