@@ -27,7 +27,7 @@ function segmentos({ ingreso, gasto }) {
   if (ingreso > 0) {
     return [
       { etiqueta: 'Gastado', valor: gasto, color: '--serie-gasto' },
-      { etiqueta: 'Disponible', valor: ingreso - gasto, color: '--resto' }
+      { etiqueta: 'Disponible', valor: ingreso - gasto, color: '--serie-ingreso' }
     ];
   }
   if (gasto > 0) return [{ etiqueta: 'Gastado', valor: gasto, color: '--serie-gasto' }];
@@ -54,10 +54,10 @@ export function renderInicio(raiz) {
     ${htmlAvisoRespaldo()}
     ${sinDatos ? '<a class="banner" href="#ajustes">Todavía no hay datos. <strong>Sincronizar o importar</strong></a>' : ''}
     <section class="tarjetas">
-      ${tarjeta('Ingreso del mes', usd(r.ingreso))}
-      ${tarjeta('Gastado', usd(r.gasto))}
-      ${tarjeta('Disponible', usd(r.ahorro), r.ahorro < 0 ? 'Te pasaste del ingreso' : '', r.ahorro < 0 ? 'negativo' : '')}
-      ${tarjeta('Evitable', usd(r.evitable), `${porcentaje(pctEvitable)} del gasto`)}
+      ${tarjeta('Ingreso del mes', usd(r.ingreso), '', 'ingreso')}
+      ${tarjeta('Gastado', usd(r.gasto), '', 'gasto')}
+      ${tarjeta('Disponible', usd(r.ahorro), r.ahorro < 0 ? 'Te pasaste del ingreso' : '', r.ahorro < 0 ? 'ahorro negativo' : 'ahorro')}
+      ${tarjeta('Evitable', usd(r.evitable), `${porcentaje(pctEvitable)} del gasto`, 'evitable')}
     </section>
     <section class="panel dona-panel">
       <h2>Gastado vs disponible</h2>

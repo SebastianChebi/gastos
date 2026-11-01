@@ -13,8 +13,8 @@ export function renderArchivo(raiz) {
   raiz.innerHTML = `
     <header class="titulo"><h1>2025</h1><p>Junio a diciembre · solo lectura</p></header>
     <section class="tarjetas">
-      ${tarjeta('Total del período', usd(m.gasto))}
-      ${tarjeta('Evitable', usd(m.evitable))}
+      ${tarjeta('Total del período', usd(m.gasto), '', 'gasto')}
+      ${tarjeta('Evitable', usd(m.evitable), '', 'evitable')}
     </section>
     <section class="panel"><h2>Categoría por mes</h2>${htmlMatriz(m)}</section>`;
 }

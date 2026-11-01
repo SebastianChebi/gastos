@@ -17,7 +17,7 @@ function htmlTablaCategorias(categorias, r) {
     <table class="tabla">
       <thead><tr><th>Categoría</th><th class="n">Total</th><th class="n">Evitable</th></tr></thead>
       <tbody>${categorias.map((c) => `<tr><td>${esc(c.nombre)}</td><td class="n">${numero(c.total)}</td><td class="n">${c.evitable ? numero(c.evitable) : '–'}</td></tr>`).join('')}</tbody>
-      <tfoot><tr><th>Total</th><td class="n">${numero(r.gasto)}</td><td class="n">${numero(r.evitable)}</td></tr></tfoot>
+      <tfoot><tr><th>Total</th><td class="n total-gasto">${numero(r.gasto)}</td><td class="n total-evitable">${numero(r.evitable)}</td></tr></tfoot>
     </table>`;
 }
 
@@ -50,16 +50,16 @@ export function renderMeses(raiz, volverADibujar) {
       ${MESES.map((m, i) => `<button type="button" data-mes="${i + 1}" aria-pressed="${i + 1 === mes}">${m}</button>`).join('')}
     </div>
     <section class="tarjetas">
-      ${tarjeta('Ingreso', usd(r.ingreso))}
-      ${tarjeta('Gasto total', usd(r.gasto))}
-      ${tarjeta('Ahorro', usd(r.ahorro), '', r.ahorro < 0 ? 'negativo' : '')}
-      ${tarjeta('Evitable', usd(r.evitable))}
+      ${tarjeta('Ingreso', usd(r.ingreso), '', 'ingreso')}
+      ${tarjeta('Gasto total', usd(r.gasto), '', 'gasto')}
+      ${tarjeta('Ahorro', usd(r.ahorro), '', r.ahorro < 0 ? 'ahorro negativo' : 'ahorro')}
+      ${tarjeta('Evitable', usd(r.evitable), '', 'evitable')}
     </section>
     <section class="panel">
       <div class="panel-cabecera"><h2>Ingresos</h2><button type="button" class="enlace fuerte" data-nuevo-ingreso>+ Agregar</button></div>
       ${r.ingresos.length
     ? `<ul class="movs">${r.ingresos.map((i) => `
-        <li><button type="button" class="mov" data-ingreso="${esc(i.id)}">
+        <li><button type="button" class="mov es-ingreso" data-ingreso="${esc(i.id)}">
           <span class="mov-texto"><strong>${esc(i.concepto)}</strong></span>
           <span class="mov-monto"><strong>${usd(i.montoUSD)}</strong>${i.moneda !== 'USD' ? `<small>${dinero(i.montoOriginal, i.moneda)}</small>` : ''}</span>
         </button></li>`).join('')}</ul>`

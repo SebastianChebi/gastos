@@ -19,8 +19,8 @@ export function htmlMatriz(m) {
         <thead><tr><th>Categoría</th>${columnas.map((c) => `<th class="n">${c.nombre}</th>`).join('')}<th class="n">Total</th></tr></thead>
         <tbody>${m.filas.map((f) => `<tr><th>${esc(f.categoria)}</th>${columnas.map((c) => `<td class="n">${celda(f.meses[c.i])}</td>`).join('')}<td class="n fuerte">${numero(f.total)}</td></tr>`).join('')}</tbody>
         <tfoot>
-          <tr><th>Total</th>${columnas.map((c) => `<td class="n">${numero(m.totalesMes[c.i])}</td>`).join('')}<td class="n">${numero(m.gasto)}</td></tr>
-          <tr><th>Evitable</th>${columnas.map((c) => `<td class="n">${numero(m.evitablesMes[c.i])}</td>`).join('')}<td class="n">${numero(m.evitable)}</td></tr>
+          <tr class="fila-gasto"><th>Total</th>${columnas.map((c) => `<td class="n">${numero(m.totalesMes[c.i])}</td>`).join('')}<td class="n">${numero(m.gasto)}</td></tr>
+          <tr class="fila-evitable"><th>Evitable</th>${columnas.map((c) => `<td class="n">${numero(m.evitablesMes[c.i])}</td>`).join('')}<td class="n">${numero(m.evitable)}</td></tr>
         </tfoot>
       </table>
     </div>`;
@@ -44,10 +44,10 @@ export function renderResumen(raiz, volverADibujar) {
     : `<p>${anioElegido}</p>`}
     </header>
     <section class="tarjetas">
-      ${tarjeta('Ingresos del año', usd(m.ingreso))}
-      ${tarjeta('Gastos del año', usd(m.gasto))}
-      ${tarjeta('Ahorro del año', usd(ahorro), '', ahorro < 0 ? 'negativo' : '')}
-      ${tarjeta('Evitable del año', usd(m.evitable), m.gasto ? `${porcentaje((m.evitable / m.gasto) * 100)} del gasto` : '')}
+      ${tarjeta('Ingresos del año', usd(m.ingreso), '', 'ingreso')}
+      ${tarjeta('Gastos del año', usd(m.gasto), '', 'gasto')}
+      ${tarjeta('Ahorro del año', usd(ahorro), '', ahorro < 0 ? 'ahorro negativo' : 'ahorro')}
+      ${tarjeta('Evitable del año', usd(m.evitable), m.gasto ? `${porcentaje((m.evitable / m.gasto) * 100)} del gasto` : '', 'evitable')}
     </section>
     ${notaMesesSinIngreso(m)}
     <section class="panel">
