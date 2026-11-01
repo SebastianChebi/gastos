@@ -19,7 +19,7 @@ export function dialogo({ titulo, mensaje = '', botones, campo = null }) {
     d.innerHTML = `
       <h2>${esc(titulo)}</h2>
       ${mensaje ? `<p>${esc(mensaje)}</p>` : ''}
-      ${campo !== null ? `<input type="text" value="${esc(campo)}" aria-label="${esc(titulo)}">` : ''}
+      ${campo !== null ? `<input type="text" value="${esc(campo)}" aria-label="${esc(titulo)}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false">` : ''}
       <div class="dialogo-botones">
         ${botones.map((b, i) => `<button type="button" class="btn ${b.tipo || ''}" data-i="${i}">${esc(b.texto)}</button>`).join('')}
         <button type="button" class="btn" data-cancelar>Cancelar</button>

@@ -4,6 +4,7 @@
 
 import { estado, iniciar } from './db.js';
 import { actualizarTC } from './tc.js';
+import { iniciarSync, sincronizar } from './sync.js';
 import { abrirFormGasto } from './form-gasto.js';
 import { limpiarGraficos } from './graficos.js';
 import { hoyISO } from './formato.js';
@@ -61,12 +62,18 @@ document.addEventListener('visibilitychange', async () => {
     ultimaFecha = hoy;
     dibujar();
   }
+  sincronizar();
   if (await actualizarTC()) dibujar();
 });
+
+// Si otro dispositivo trajo cambios, se ven enseguida.
+document.addEventListener('datos-sincronizados', dibujar);
+window.addEventListener('online', () => sincronizar());
 
 async function arrancar() {
   await iniciar();
   dibujar();
+  await iniciarSync();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
   if (await actualizarTC()) dibujar();
 }
