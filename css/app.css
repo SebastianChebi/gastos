@@ -157,6 +157,7 @@ main {
 .mov-monto { text-align: right; flex: none; }
 .mov-monto strong { display: block; font-weight: 600; }
 .mov.es-ingreso .mov-monto strong { color: var(--ingreso-texto); }
+.categoria { text-decoration: underline; text-decoration-color: var(--texto-3); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .etiqueta { color: var(--etiqueta-texto); background: var(--etiqueta-fondo); border-radius: 4px; padding: 0 5px; font-weight: 600; }
 
 /* ---------- Tablas ---------- */
