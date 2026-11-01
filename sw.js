@@ -3,7 +3,7 @@
 // paralelo, baja la versión nueva para la próxima apertura. Así un cambio publicado
 // llega solo, sin tocar nada acá. Si agregás un archivo nuevo, sumalo a ARCHIVOS.
 
-const CACHE = 'gastos-v2';
+const CACHE = 'gastos-v3';
 
 const ARCHIVOS = [
   './', 'index.html', 'manifest.json', 'css/app.css', 'vendor/chart.umd.js',
